@@ -1,0 +1,42 @@
+{
+  "dependencies": {
+    "await-to-js": "^2.1.1",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "body-parser": "^1.19.0",
+    "chai-http": "^4.3.0",
+    "dotenv": "^8.1.0",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "mongodb": "^3.3.2"
+  },
+  "name": "remitano_test",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^6.2.1",
+    "nyc": "^14.1.1"
+  },
+  "scripts": {
+    "test": "nyc mocha --recursive test --timeout 10000 --require babel-register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nthhtn/remitano_test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nthhtn/remitano_test/issues"
+  },
+  "homepage": "https://github.com/nthhtn/remitano_test#readme"
+}
