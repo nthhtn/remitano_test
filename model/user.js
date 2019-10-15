@@ -1,6 +1,6 @@
 import { ObjectID } from 'mongodb';
 
-export class UserModel {
+export default class UserModel {
 
 	constructor(db) {
 		this._db = db;

@@ -1,4 +1,8 @@
 {
 	"presets": ["env"],
-	"plugins": []
+	"plugins": [
+		["transform-runtime", {
+			"regenerator": true
+		}]
+	]
 }

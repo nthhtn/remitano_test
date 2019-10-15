@@ -1,7 +1,5 @@
 import chai from 'chai';
 const expect = chai.expect;
-import chaiPromise from 'chai-as-promised';
-chai.use(chaiPromise);
 import { generateRandomString, hashPassword } from '../../lib/password';
 
 describe('Test lib password', () => {
@@ -15,6 +13,14 @@ describe('Test lib password', () => {
 			const randomString = generateRandomString(10);
 			return expect(randomString).to.have.length(10);
 		});
+	});
+
+	describe('hashPassword', () => {
+		it('Return a string', () => {
+			const randomString = generateRandomString();
+			const result = hashPassword('123456789', randomString);
+			return expect(result).to.be.a.string;
+		})
 	});
 
 });

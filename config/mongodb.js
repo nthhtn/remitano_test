@@ -1,3 +1,6 @@
 require('dotenv').config();
 
-export default process.env.MONGO_URL;
+module.exports = {
+	url: process.env.MONGO_URL,
+	dbname: process.env.MONGO_DBNAME
+};
