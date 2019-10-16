@@ -1,6 +1,6 @@
 import { ObjectID } from 'mongodb';
 
-export class VoteModel {
+export default class VoteModel {
 
 	constructor(db) {
 		this._db = db;
@@ -10,6 +10,7 @@ export class VoteModel {
 	async create(data) {
 		data._id = new ObjectID().toString();
 		try {
+			await this._db.collection(this._table).createIndex({ videoId: 1, userId: 1 }, { unique: 1 });
 			await this._db.collection(this._table).insertOne(data);
 			return Promise.resolve(data);
 		} catch (error) {

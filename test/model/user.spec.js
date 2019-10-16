@@ -7,7 +7,7 @@ import { MongoClient } from 'mongodb';
 import UserModel from '../../model/user';
 
 const sample_user = {
-	username: 'nthhtn',
+	email: 'thehien115@gmail.com',
 	salt: '123456',
 	password: '958D51602BBFBD18B2A084BA848A827C29952BFEF170C936419B0922994C0589'
 };
@@ -42,7 +42,7 @@ describe('Test User model', () => {
 			return User.create(sample_user).then(
 				(result) => {
 					expect(result._id).to.be.a('string');
-					expect(result.username).to.equal(sample_user.username);
+					expect(result.email).to.equal(sample_user.email);
 					expect(result.salt).to.equal(sample_user.salt);
 					expect(result.password).to.equal(sample_user.password);
 					id = result._id;
@@ -52,6 +52,35 @@ describe('Test User model', () => {
 			return client.close(true).then(() => {
 				connected = false;
 				return expect(User.create(sample_user)).to.be.rejected;
+			});
+		});
+		afterEach(async () => {
+			(!connected && await connect());
+			return db.collection('user').findOneAndDelete({ _id: id });
+		});
+	});
+
+	describe('readByEmail', () => {
+		let id;
+		beforeEach(async () => {
+			(!connected && await connect());
+			const result = await User.create(sample_user);
+			id = result._id;
+		});
+		it('Should return an inserted document', () => {
+			return User.readByEmail(sample_user.email).then(
+				(result) => {
+					expect(result._id).to.be.a('string');
+					expect(result.email).to.equal(sample_user.email);
+					expect(result.salt).to.equal(sample_user.salt);
+					expect(result.password).to.equal(sample_user.password);
+					id = result._id;
+				});
+		});
+		it('Should fail due to lost connection', () => {
+			return client.close(true).then(() => {
+				connected = false;
+				return expect(User.readByEmail(sample_user.email)).to.be.rejected;
 			});
 		});
 		afterEach(async () => {

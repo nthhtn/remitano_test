@@ -43,6 +43,7 @@ describe('Test Video model', () => {
 					expect(result._id).to.be.a('string');
 					expect(result.url).to.equal(sample_video.url);
 					expect(result.userId).to.equal(sample_video.userId);
+					expect(result.createdAt).to.be.a('number');
 					id = result._id;
 				});
 		});
@@ -66,22 +67,29 @@ describe('Test Video model', () => {
 				const item = {
 					_id: new ObjectID().toString(),
 					url: 'url_' + i.toString(),
-					userId: 'user_' + (i / 2).toString()
+					userId: 'user_' + (i / 2).toString(),
+					createdAt: Date.now()
 				};
 				array.push(item);
 			}
 			return db.collection('video').insertMany(array);
 		});
-		it('Should return all documents', () => {
+		it('Should return all documents in descending "createdAt"', () => {
 			return Video.queryByFields().then(
 				(result) => {
 					expect(result.length).to.equal(10);
+					for (let i = 0; i < result.length - 1; i++) {
+						expect(result[i].createdAt >= result[i + 1].createdAt);
+					}
 				});
 		});
-		it('Should return all documents with userId = "user_0"', () => {
+		it('Should return all documents with userId = "user_0" in descending "createdAt"', () => {
 			return Video.queryByFields({ userId: 'user_0' }).then(
 				(result) => {
 					result.map((item) => expect(item.userId).to.equal('user_0'));
+					for (let i = 0; i < result.length - 1; i++) {
+						expect(result[i].createdAt >= result[i + 1].createdAt);
+					}
 				});
 		});
 		it('Should fail due to lost connection', () => {
