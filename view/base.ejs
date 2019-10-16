@@ -35,9 +35,10 @@
 				<div class="form-group form-inline ml-auto" id="login-form">
 					<% if (user) { %>
 					<span style="margin-right:15px;">Welcome thehien115@gmail.com</span>
-					<button class="btn btn-primary" style="border:1px solid;margin-right:15px;">Share a movie</button>
-					<button class="btn btn-primary" style="border:1px solid;">Logout</button>
-					<script src='/js/user.js'></script>
+					<button class="btn btn-primary" style="border:1px solid;margin-right:15px;" id="shareform-btn"
+						data-toggle="modal" data-target="#video-share">
+						Share a movie</button>
+					<button class="btn btn-primary" style="border:1px solid;" id="logout-btn">Logout</button>
 					<% } else { %>
 					<span class="login-error"></span>
 					<div class="form-group no-border">
@@ -53,6 +54,34 @@
 			</div>
 		</nav>
 		<div class="container" style="margin-top:100px;">
+			<% if (user) { %>
+			<div class="modal fade" id="video-share" tabindex="-1" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Share a YouTube movie</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div id="video-share-form">
+								<div class="form-group">
+									<label for="video-share-url">YouTube URL: *</label>
+									<input type="text" class="form-control" id="video-share-url">
+								</div>
+								<p class="error"></p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary" id="video-share-btn">Save</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script src='/js/user.js'></script>
+			<% } %>
 			<div id="video-list">
 				<div class="video-item row">
 					<div class="col-xs-12 col-md-6 video-wrapper">
@@ -76,19 +105,25 @@
 							</div>
 						</div>
 						<div class="video-description col-xs-12">
-							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-							been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-							galley of type and scrambled it to make a type specimen book. It has survived not only five
-							centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-							It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-							passages, and more recently with desktop publishing software like Aldus PageMaker including
+							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+							has
+							been the industry's standard dummy text ever since the 1500s, when an unknown printer
+							took a
+							galley of type and scrambled it to make a type specimen book. It has survived not only
+							five
+							centuries, but also the leap into electronic typesetting, remaining essentially
+							unchanged.
+							It was popularised in the 1960s with the release of Letraset sheets containing Lorem
+							Ipsum
+							passages, and more recently with desktop publishing software like Aldus PageMaker
+							including
 							versions of Lorem Ipsum.
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
-	</div>
 
 </body>
 

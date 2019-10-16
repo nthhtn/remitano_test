@@ -7,7 +7,7 @@ import { MongoClient } from 'mongodb';
 import UserModel from '../../model/user';
 
 const sample_user = {
-	email: 'thehien115@gmail.com',
+	email: 'test@gmail.com',
 	salt: '123456',
 	password: '958D51602BBFBD18B2A084BA848A827C29952BFEF170C936419B0922994C0589'
 };
@@ -46,6 +46,13 @@ describe('Test User model', () => {
 					expect(result.salt).to.equal(sample_user.salt);
 					expect(result.password).to.equal(sample_user.password);
 					id = result._id;
+				});
+		});
+		it('Should fail due to duplicate email', () => {
+			return User.create(sample_user).then(
+				(result) => {
+					id = result._id;
+					return expect(User.create(sample_user)).to.be.rejected;
 				});
 		});
 		it('Should fail due to lost connection', () => {

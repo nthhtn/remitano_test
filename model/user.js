@@ -10,6 +10,7 @@ export default class UserModel {
 	async create(data) {
 		data._id = new ObjectID().toString();
 		try {
+			await this._db.collection(this._table).createIndex({ email: 1 }, { unique: 1 });
 			await this._db.collection(this._table).insertOne(data);
 			return Promise.resolve(data);
 		} catch (error) {

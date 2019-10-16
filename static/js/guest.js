@@ -22,8 +22,7 @@ $('#login-btn').on('click', () => {
 			window.location.href = '/';
 		},
 		error: (error) => {
-			console.log(error);
-			$('#login-form .login-error').html('Wrong password');
+			$('#login-form .login-error').html(error.responseJSON.error);
 		}
 	});
 });

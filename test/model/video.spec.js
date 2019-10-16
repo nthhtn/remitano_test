@@ -8,6 +8,7 @@ import VideoModel from '../../model/video';
 
 const sample_video = {
 	url: 'https://www.youtube.com/watch?v=xa45wXhc5zg',
+	youtubeId: 'xa45wXhc5zg',
 	userId: 'user_1'
 };
 
@@ -42,6 +43,7 @@ describe('Test Video model', () => {
 				(result) => {
 					expect(result._id).to.be.a('string');
 					expect(result.url).to.equal(sample_video.url);
+					expect(result.youtubeId).to.equal(sample_video.youtubeId);
 					expect(result.userId).to.equal(sample_video.userId);
 					expect(result.createdAt).to.be.a('number');
 					id = result._id;
@@ -67,6 +69,7 @@ describe('Test Video model', () => {
 				const item = {
 					_id: new ObjectID().toString(),
 					url: 'url_' + i.toString(),
+					youtubeId: 'id_' + i.toString(),
 					userId: 'user_' + (i / 2).toString(),
 					createdAt: Date.now()
 				};

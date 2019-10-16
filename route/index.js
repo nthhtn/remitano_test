@@ -19,7 +19,7 @@ module.exports = (app, db) => {
 			if (result) {
 				const hashed = hashPassword(password, result.salt);
 				if (hashed === result.password) {
-					req.session.user = email;
+					req.session.user = { _id: result._id, email };
 					return res.json({ success: true });
 				}
 				return res.status(401).json({ success: false, error: 'Wrong password' });
@@ -28,7 +28,15 @@ module.exports = (app, db) => {
 			const hashedPassword = hashPassword(password, salt);
 			[err, result] = await to(User.create({ email, salt, password: hashedPassword }));
 			if (err) { return res.status(500).json({ success: false, error: err.message }); }
+			req.session.user = { _id: result._id, email };
 			return res.json({ success: true });
+		});
+
+	router.route('/logout')
+		.post(isLoggedIn, (req, res) => {
+			return req.session.destroy((err) => {
+				return err ? res.status(500).json({ success: false, error: err.message }) : res.json({ success: true });
+			});
 		});
 
 	router.route('/')

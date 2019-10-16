@@ -26,6 +26,8 @@ app.set('views', './view');
 MongoClient.connect(url, async (err, client) => {
 	if (err) { throw err; }
 	const db = await client.db(dbname);
+	require('./route/video')(app, db);
+	require('./route/vote')(app, db);
 	require('./route/index')(app, db);
 	app.listen(port, () => console.log(`Small project is listening on port ${port}`));
 });

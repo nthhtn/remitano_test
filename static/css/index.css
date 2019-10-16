@@ -111,3 +111,7 @@
 .video-vote button:hover {
 	color: black;
 }
+
+#video-share-form .error {
+	color: red;
+}
