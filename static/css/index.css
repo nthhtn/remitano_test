@@ -1,0 +1,107 @@
+#login-form {
+	margin-bottom: 0;
+}
+
+#login-form>div {
+	margin: 0 20px;
+	padding: 0;
+}
+
+#login-form input {
+	color: white;
+}
+
+.video-item {
+	max-height: 400px;
+}
+
+.video-item>* {
+	float: none;
+	display: table-cell;
+}
+
+.video-wrapper {
+	position: relative;
+	padding-bottom: 56.25%;
+	height: 0;
+	overflow: hidden;
+}
+
+.video-wrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.video-info {
+	color: black;
+	text-align: left;
+	margin: 0;
+}
+
+.video-title {
+	color: red;
+	white-space: nowrap;
+	overflow: hidden !important;
+	text-overflow: ellipsis;
+}
+
+.video-description {
+	overflow: hidden;
+	position: relative;
+	line-height: 1.2em;
+	max-height: 12em;
+	text-align: justify;
+	margin-right: -1em;
+	padding-right: 1em;
+}
+
+.video-description:before {
+	content: '...';
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+.video-description:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	width: 1em;
+	height: 1em;
+	margin-top: 0.2em;
+	background: #eee;
+}
+
+.video-header {
+	display: table;
+}
+
+.video-brief {
+	display: table-cell;
+	vertical-align: top;
+}
+
+.video-vote {
+	display: table-cell;
+	vertical-align: top;
+}
+
+.video-vote button {
+	float: right;
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	color: grey;
+}
+
+.video-vote button.active {
+	color: black;
+}
+
+.video-vote button:hover {
+	color: black;
+}

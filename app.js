@@ -5,6 +5,8 @@ import session from 'express-session';
 import { url, dbname } from './config/mongodb';
 import { MongoClient } from 'mongodb';
 
+import port from './config/port';
+
 var app = express();
 
 app.use(session({
@@ -24,4 +26,6 @@ app.set('views', './view');
 MongoClient.connect(url, async (err, client) => {
 	if (err) { throw err; }
 	const db = await client.db(dbname);
+	require('./route/index')(app, db);
+	app.listen(port, () => console.log(`Small project is listening on port ${port}`));
 });
