@@ -66,9 +66,12 @@ PORT = your_hosting_port_on_hosting_machine
 ```
 
 ### Screenshots
+ 
+![Picture 1](https://i.imgur.com/QpSkTw4.png "Homepage")
 
-***
+![Picture 2](https://i.imgur.com/5SoRP66.png "Homepage logged in")
 
+![Picture 3](https://i.imgur.com/2CLMRUh.png "Share")
 
 
 ### Author
