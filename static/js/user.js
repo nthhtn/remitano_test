@@ -20,19 +20,34 @@ function getYoutubeVideoId(url) {
 
 $('#video-share-btn').on('click', () => {
 	let url = $('#video-share-url').val();
-	let videoId = getYoutubeVideoId(url);
-	if (!videoId) {
+	let youtubeId = getYoutubeVideoId(url);
+	if (!youtubeId) {
 		$('#video-share .error').html('Invalid video URL');
 		return;
 	}
 	$.ajax({
 		url: '/video',
 		method: 'POST',
+		data: { url: url, youtubeId: youtubeId },
 		success: (response) => {
 			window.location.href = '/';
 		},
 		error: (error) => {
 			$('#video-share .error').html(error.responseJSON.error);
+		}
+	})
+});
+
+$('.video-vote button').on('click', function () {
+	let selfElement = $(this);
+	let value = $(this).hasClass('active') ? 'none' : $(this).attr('vote-value');
+	let videoId = $(this).closest('.video-item').attr('video-id');
+	$.ajax({
+		url: '/vote',
+		method: 'POST',
+		data: { videoId: videoId, value: value },
+		success: (response) => {
+			value === 'none' ? $(selfElement).removeClass('active') : $(selfElement).addClass('active');
 		}
 	})
 });

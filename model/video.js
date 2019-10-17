@@ -26,4 +26,36 @@ export default class VideoModel {
 		}
 	}
 
+	async lookup(filter_options = {}) {
+		try {
+			const aggregate = [
+				{ $project: { _id: 1, url: 1, youtubeId: 1, userId: 1 } },
+				{ $match: filter_options },
+				{ $sort: { createdAt: -1 } },
+				{
+					$lookup: {
+						from: 'vote',
+						localField: '_id',
+						foreignField: 'videoId',
+						as: 'votes'
+					}
+				},
+				{
+					$lookup: {
+						from: 'user',
+						localField: 'userId',
+						foreignField: '_id',
+						as: 'sharer'
+					}
+				},
+				{
+					$unwind: { path: '$sharer', preserveNullAndEmptyArrays: true }
+				}
+			];
+			return await this._db.collection(this._table).aggregate(aggregate).toArray();
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
 }

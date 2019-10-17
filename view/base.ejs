@@ -48,7 +48,6 @@
 						<input type="password" class="form-control" placeholder="Password" id="login-password">
 					</div>
 					<button class="btn btn-primary" style="border:1px solid;" id="login-btn">Login/Register</button>
-					<script src='/js/guest.js'></script>
 					<% } %>
 				</div>
 			</div>
@@ -80,51 +79,49 @@
 					</div>
 				</div>
 			</div>
-			<script src='/js/user.js'></script>
 			<% } %>
 			<div id="video-list">
-				<div class="video-item row">
+				<%  videos.forEach(function (item) { %>
+				<div class="video-item row" video-id="<%=item._id%>">
 					<div class="col-xs-12 col-md-6 video-wrapper">
-						<iframe width="560" height="315" src="https://www.youtube.com/embed/xa45wXhc5zg" frameborder="0"
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/<%=item.youtubeId%>"
+							frameborder="0"
 							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 							allowfullscreen></iframe>
 					</div>
 					<div class="col-xs-12 col-md-6 video-info">
 						<div class="video-header">
 							<div class="video-brief">
-								<h3 class="video-title"><strong>Lorem ipsum</strong></h3>
-								<h4>Shared by: <strong>thehien115@gmail.com</strong></h4>
+								<h3 class="video-title"><strong><%=item.title%></strong></h3>
+								<h4>Shared by: <strong><%=item.sharer%></strong></h4>
 								<div class="video-voteinfo">
-									1024 <i class="fa fa-thumbs-up" style="color:#4caf50;"></i>
-									128 <i class="fa fa-thumbs-down" style="color:#f44336"></i>
+									<%=item.likes%> <i class="fa fa-thumbs-up" style="color:#4caf50;"></i>
+									<%=item.dislikes%> <i class="fa fa-thumbs-down" style="color:#f44336"></i>
 								</div>
 							</div>
+							<% if (user) { %>
+							<% if (item.myvote=="like") { %>
 							<div class="video-vote">
-								<button><i class="fa fa-thumbs-down fa-5x"></i></button>
-								<button><i class="fa fa-thumbs-up fa-5x"></i></button>
+								<button vote-value="dislike"><i class="fa fa-thumbs-down fa-5x"></i></button>
+								<button vote-value="like" class="active"><i class="fa fa-thumbs-up fa-5x"></i></button>
 							</div>
+							<% } else if (item.myvote=="dislike") { %>
+							<div class="video-vote">
+								<button vote-value="dislike" class="active"><i
+										class="fa fa-thumbs-down fa-5x"></i></button>
+								<button vote-value="like"><i class="fa fa-thumbs-up fa-5x"></i></button>
+							</div>
+							<% } %>
+							<% } %>
 						</div>
-						<div class="video-description col-xs-12">
-							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-							has
-							been the industry's standard dummy text ever since the 1500s, when an unknown printer
-							took a
-							galley of type and scrambled it to make a type specimen book. It has survived not only
-							five
-							centuries, but also the leap into electronic typesetting, remaining essentially
-							unchanged.
-							It was popularised in the 1960s with the release of Letraset sheets containing Lorem
-							Ipsum
-							passages, and more recently with desktop publishing software like Aldus PageMaker
-							including
-							versions of Lorem Ipsum.
-						</div>
+						<div class="video-description col-xs-12"><%=item.description%></div>
 					</div>
 				</div>
-
+				<% }) %>
 			</div>
 		</div>
-
+		<script src='/js/guest.js'></script>
+		<script src='/js/user.js'></script>
 </body>
 
 </html>

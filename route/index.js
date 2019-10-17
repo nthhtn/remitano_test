@@ -2,14 +2,19 @@ import express from 'express';
 import { isLoggedIn, isNotLoggedIn } from '../lib/auth';
 import UserModel from '../model/user';
 import VideoModel from '../model/video';
+import VoteModel from '../model/vote';
 import { generateRandomString, hashPassword } from '../lib/password';
 import to from 'await-to-js';
+import { apikey } from '../config/youtube';
+import axios from 'axios';
+import Promise from 'bluebird';
 
 module.exports = (app, db) => {
 
 	const router = express.Router();
 	const User = new UserModel(db);
 	const Video = new VideoModel(db);
+	const Vote = new VoteModel(db);
 
 	router.route('/login')
 		.post(isNotLoggedIn, async (req, res) => {
@@ -41,7 +46,27 @@ module.exports = (app, db) => {
 
 	router.route('/')
 		.get(async (req, res) => {
-			return res.render('base', { user: req.session.user || undefined });
+			const { user } = req.session;
+			let videos = await Video.lookup({});
+			await Promise.map(videos, async (item, i) => {
+				item.likes = item.votes.filter((vote) => vote.value === 'like').length;
+				item.dislikes = item.votes.filter((vote) => vote.value === 'dislike').length;
+				if (user) {
+					const myvote = await Vote.getOneUserVote(item._id, user._id);
+					item.myvote = myvote ? myvote.value : 'none';
+				}
+				delete item.votes;
+				item.sharer = item.sharer.email;
+				const youtubeVideo = await axios({
+					url: `https://www.googleapis.com/youtube/v3/videos`,
+					method: 'GET',
+					params: { key: apikey, part: 'snippet', id: item.youtubeId }
+				}).then((response) => (response.data));
+				item.title = youtubeVideo.items[0] ? youtubeVideo.items[0].snippet.title : '';
+				item.description = youtubeVideo.items[0] ? youtubeVideo.items[0].snippet.description : '';
+				videos[i] = item;
+			});
+			return res.render('base', { videos, user });
 		});
 
 	app.use(router);

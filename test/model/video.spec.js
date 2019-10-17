@@ -107,4 +107,50 @@ describe('Test Video model', () => {
 		});
 	});
 
+	describe('lookup', () => {
+		beforeEach(async () => {
+			(!connected && await connect());
+			let array = [];
+			for (let i = 1; i <= 10; i++) {
+				const item = {
+					_id: new ObjectID().toString(),
+					url: 'url_' + i.toString(),
+					youtubeId: 'id_' + i.toString(),
+					userId: 'user_' + (i / 2).toString(),
+					createdAt: Date.now()
+				};
+				array.push(item);
+			}
+			return db.collection('video').insertMany(array);
+		});
+		it('Should return all documents in descending "createdAt"', () => {
+			return Video.lookup().then(
+				(result) => {
+					expect(result.length).to.equal(10);
+					for (let i = 0; i < result.length - 1; i++) {
+						expect(result[i].createdAt >= result[i + 1].createdAt);
+					}
+				});
+		});
+		it('Should return all documents with userId = "user_0" in descending "createdAt"', () => {
+			return Video.lookup({ userId: 'user_0' }).then(
+				(result) => {
+					result.map((item) => expect(item.userId).to.equal('user_0'));
+					for (let i = 0; i < result.length - 1; i++) {
+						expect(result[i].createdAt >= result[i + 1].createdAt);
+					}
+				});
+		});
+		it('Should fail due to lost connection', () => {
+			return client.close(true).then(() => {
+				connected = false;
+				return expect(Video.lookup()).to.be.rejected;
+			});
+		});
+		afterEach(async () => {
+			(!connected && await connect());
+			return db.collection('video').deleteMany({});
+		});
+	});
+
 });
