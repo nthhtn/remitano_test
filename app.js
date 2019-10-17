@@ -32,3 +32,5 @@ MongoClient.connect(url, { useUnifiedTopology: true, useNewUrlParser: true }, as
 	require('./route/index')(app, db);
 	server.listen(port, () => console.log(`Small project is listening on port ${port}`));
 });
+
+module.exports = app;
