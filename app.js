@@ -9,10 +9,8 @@ import port from './config/port';
 
 var app = express();
 
-const MongoStore = require('connect-mongo')(session);
 app.use(session({
 	secret: 'remitano',
-	sore: new MongoStore({ url }),
 	resave: true,
 	saveUninitialized: true
 }));
@@ -25,7 +23,7 @@ app.use(express.static(`${__dirname}/static`));
 app.set('view engine', 'ejs');
 app.set('views', './view');
 
-MongoClient.connect(url, async (err, client) => {
+MongoClient.connect(url, { useUnifiedTopology: true, useNewUrlParser: true }, async (err, client) => {
 	if (err) { throw err; }
 	const db = await client.db(dbname);
 	require('./route/video')(app, db);
