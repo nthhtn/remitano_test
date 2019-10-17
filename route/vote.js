@@ -1,5 +1,5 @@
 import express from 'express';
-import { isLoggedIn } from '../lib/auth';
+import { isLoggedIn } from '../lib/middleware';
 import VoteModel from '../model/vote';
 
 module.exports = (app, db) => {

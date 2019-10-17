@@ -1,5 +1,5 @@
 import express from 'express';
-import { isLoggedIn, isNotLoggedIn } from '../lib/auth';
+import { isLoggedIn, isNotLoggedIn } from '../lib/middleware';
 import UserModel from '../model/user';
 import VideoModel from '../model/video';
 import VoteModel from '../model/vote';

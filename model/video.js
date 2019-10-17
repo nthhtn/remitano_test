@@ -29,7 +29,7 @@ export default class VideoModel {
 	async lookup(filter_options = {}) {
 		try {
 			const aggregate = [
-				{ $project: { _id: 1, url: 1, youtubeId: 1, userId: 1 } },
+				{ $project: { _id: 1, url: 1, youtubeId: 1, userId: 1, createdAt: 1 } },
 				{ $match: filter_options },
 				{ $sort: { createdAt: -1 } },
 				{

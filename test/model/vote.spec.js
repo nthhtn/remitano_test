@@ -92,8 +92,6 @@ describe('Test Vote model', () => {
 		let id;
 		beforeEach(async () => {
 			(!connected && await connect());
-			// const result = await Vote.create(sample_vote);
-			// id = result._id;
 		});
 		it('Should return an upserted document', () => {
 			return Vote.upsert({ videoId: sample_vote.videoId, userId: sample_vote.userId }, { value: 'dislike' }).then(
@@ -118,7 +116,7 @@ describe('Test Vote model', () => {
 		it('Should fail due to lost connection', () => {
 			return client.close(true).then(() => {
 				connected = false;
-				return expect(Vote.upsert(id, { value: 'dislike' })).to.be.rejected;
+				return expect(Vote.upsert({ videoId: sample_vote.videoId, userId: sample_vote.userId }, { value: 'dislike' })).to.be.rejected;
 			});
 		});
 		afterEach(async () => {
@@ -126,5 +124,41 @@ describe('Test Vote model', () => {
 			return db.collection('vote').findOneAndDelete({ _id: id });
 		});
 	});
+
+	describe('getOneUserVote', () => {
+		let id;
+		beforeEach(async () => {
+			(!connected && await connect());
+		});
+		it('Should return null', () => {
+			return Vote.getOneUserVote(sample_vote.videoId, sample_vote.userId).then(
+				(result) => {
+					expect(result).to.equal(null);
+				});
+		});
+		it('Should return a document', () => {
+			return Vote.create(sample_vote).then((result) => {
+				id = result._id;
+				return Vote.getOneUserVote(sample_vote.videoId, sample_vote.userId).then(
+					(result) => {
+						expect(result.videoId).to.equal(sample_vote.videoId);
+						expect(result.userId).to.equal(sample_vote.userId);
+						expect(result.value).to.equal(sample_vote.value);
+					});
+			});
+		});
+		it('Should fail due to lost connection', () => {
+			return client.close(true).then(() => {
+				connected = false;
+				return expect(Vote.getOneUserVote(sample_vote.videoId, sample_vote.userId)).to.be.rejected;
+			});
+		});
+		afterEach(async () => {
+			(!connected && await connect());
+			return db.collection('vote').findOneAndDelete({ _id: id });
+		});
+	});
+
+
 
 });

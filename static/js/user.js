@@ -40,6 +40,7 @@ $('#video-share-btn').on('click', () => {
 
 $('.video-vote button').on('click', function () {
 	let selfElement = $(this);
+	let activeElement = $(this).closest('.video-vote').find('button.active');
 	let value = $(this).hasClass('active') ? 'none' : $(this).attr('vote-value');
 	let videoId = $(this).closest('.video-item').attr('video-id');
 	$.ajax({

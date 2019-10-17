@@ -7,7 +7,7 @@ This repository is deducated to a small test project by Remitano.
 ***
 
 * MongoDB
-* Unit/integration testing
+* Unit/Integration testing
 
 ### Features
 
@@ -16,6 +16,7 @@ This repository is deducated to a small test project by Remitano.
 * Login / Register; Logout
 * Share a YouTube video
 * Rate a shared video
+* Count number of like/dislike rating of shared video
 
 ### Packages
 
@@ -29,6 +30,8 @@ This repository is deducated to a small test project by Remitano.
 * Dotenv - Storing configuration: <https://github.com/motdotla/dotenv>
 * Body-parser - Node.js body parsing middleware: <https://github.com/expressjs/body-parser>
 * EJS - Embedded JavaScript templates: <https://github.com/mde/ejs>
+* Axios - Promise based HTTP client for the browser and node.js: <https://github.com/axios/axios>
+* Bluebird - Full featured promise library with unmatched performance: <http://bluebirdjs.com/docs/getting-started.html>
 * Several Babel packages
 
 #### Development
