@@ -95,9 +95,9 @@
 								<h3 class="video-title"><strong><%=item.title%></strong></h3>
 								<h4>Shared by: <strong><%=item.sharer%></strong></h4>
 								<div class="video-voteinfo">
-									<span class="video-likes"><%=item.likes%></span> <i class="fa fa-thumbs-up"
+									<span class="video-like-count"><%=item.likes%></span> <i class="fa fa-thumbs-up"
 										style="color:#4caf50;"></i>
-									<span class="video-dislikes"><%=item.dislikes%></span> <i class="fa fa-thumbs-down"
+									<span class="video-dislike-count"><%=item.dislikes%></span> <i class="fa fa-thumbs-down"
 										style="color:#f44336"></i>
 								</div>
 							</div>
@@ -114,11 +114,11 @@
 								<button vote-value="like"><i class="fa fa-thumbs-up fa-5x"></i></button>
 							</div>
 							<% } else { %>
-							<% } %>
 							<div class="video-vote">
 								<button vote-value="dislike"><i class="fa fa-thumbs-down fa-5x"></i></button>
 								<button vote-value="like"><i class="fa fa-thumbs-up fa-5x"></i></button>
 							</div>
+							<% } %>
 							<% } %>
 						</div>
 						<div class="video-description col-xs-12"><%=item.description%></div>

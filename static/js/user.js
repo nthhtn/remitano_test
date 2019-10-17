@@ -40,7 +40,8 @@ $('#video-share-btn').on('click', () => {
 
 $('.video-vote button').on('click', function () {
 	let selfElement = $(this);
-	let activeElement = $(this).closest('.video-vote').find('button.active');
+	let oldElement = $(this).closest('.video-vote').find('button.active');
+	let oldValue = oldElement.length > 0 ? $(oldElement).attr('vote-value') : 'none';
 	let value = $(this).hasClass('active') ? 'none' : $(this).attr('vote-value');
 	let videoId = $(this).closest('.video-item').attr('video-id');
 	$.ajax({
@@ -48,7 +49,20 @@ $('.video-vote button').on('click', function () {
 		method: 'POST',
 		data: { videoId: videoId, value: value },
 		success: (response) => {
+			$(oldElement).removeClass('active');
 			value === 'none' ? $(selfElement).removeClass('active') : $(selfElement).addClass('active');
+			if (oldValue !== 'none') {
+				let oldSpan = $(oldElement).closest('.video-item').find('.video-' + oldValue + '-count');
+				let oldValueCount = parseInt($(oldSpan).html());
+				oldValueCount--;
+				$(oldSpan).html(oldValueCount);
+			}
+			if (value !== 'none') {
+				let newSpan = $(selfElement).closest('.video-item').find('.video-' + value + '-count');
+				let newValueCount = parseInt($(newSpan).html());
+				newValueCount++;
+				$(newSpan).html(newValueCount);
+			}
 		}
 	})
 });
