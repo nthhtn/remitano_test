@@ -9,8 +9,10 @@ import port from './config/port';
 
 var app = express();
 
+const MongoStore = require('connect-mongo')(session);
 app.use(session({
 	secret: 'remitano',
+	sore: new MongoStore({ url }),
 	resave: true,
 	saveUninitialized: true
 }));
