@@ -47,6 +47,30 @@ This repository is deducated to a small test project by Remitano.
 
 ***
 
+* Clone project:
+```
+git clone https://github.com/nthhtn/remitano_test.git
+```
+
+* Install packages:
+```
+npm install
+```
+
+* Initialize `.env` file in root folder, specifying:
+```
+MONGO_URL = your_mongo_string_connection_url
+MONGO_DBNAME = your_mongo_dbname
+YOUTUBE_APIKEY = your_youtube_apikey
+PORT = your_hosting_port_on_hosting_machine
+```
+
+### Screenshots
+
+***
+
+
+
 ### Author
 
 ***
