@@ -8,6 +8,7 @@ import { MongoClient } from 'mongodb';
 import port from './config/port';
 
 var app = express();
+var server = require('http').Server(app);
 
 app.use(session({
 	secret: 'remitano',
@@ -29,5 +30,5 @@ MongoClient.connect(url, { useUnifiedTopology: true, useNewUrlParser: true }, as
 	require('./route/video')(app, db);
 	require('./route/vote')(app, db);
 	require('./route/index')(app, db);
-	app.listen(port, () => console.log(`Small project is listening on port ${port}`));
+	server.listen(port, () => console.log(`Small project is listening on port ${port}`));
 });
